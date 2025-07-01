@@ -1,4 +1,7 @@
 package com.ENAA_Skills.enaa_skills.repository;
 
-public class LearnerRepository {
+import com.ENAA_Skills.enaa_skills.model.Learner;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LearnerRepository extends JpaRepository<Learner,Long> {
 }
