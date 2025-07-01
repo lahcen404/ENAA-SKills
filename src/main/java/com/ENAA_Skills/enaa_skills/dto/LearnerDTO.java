@@ -1,8 +1,9 @@
 package com.ENAA_Skills.enaa_skills.dto;
 
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
 
 public class LearnerDTO {
-    private String learnerName;
-    private List<String> completedSkills;
+    private Long id;
+    @NotBlank(message = "Learner name cannot be blank")
+    private String name;
 }

@@ -1,11 +1,19 @@
 package com.ENAA_Skills.enaa_skills.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
 public class SkillDTO {
     private Long id;
+
+    @NotBlank(message = "Skill name cannot be blank")
     private String name;
+
     private String description;
+
+    @Valid
     private List<SubSkillDTO> subSkills;
 
     public Long getId() {
