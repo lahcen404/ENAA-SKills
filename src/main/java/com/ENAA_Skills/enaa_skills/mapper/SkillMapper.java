@@ -13,6 +13,7 @@ import java.util.List;
 public interface SkillMapper {
     SkillDTO skillToSkillDTO(Skill skill);
     List<SkillDTO> skillsToSkillDTOs(List<Skill> skills);
+    SubSkillDTO subSkillToSubSkillDTO(SubSkill subSkill);
 
     @Mapping(target = "id", ignore = true)
     Skill skillDTOToSkill(SkillDTO skillDTO);
