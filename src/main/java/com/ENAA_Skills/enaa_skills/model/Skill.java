@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "skills")
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String description;
 
-    @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL)
-    private List<SubSkill> subSkills = new ArrayList<>(); ;
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubSkill> subSkills = new ArrayList<>();
 
 
     public Long getId() {
@@ -35,13 +35,7 @@ public class Skill {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public List<SubSkill> getSubSkills() {
         return subSkills;

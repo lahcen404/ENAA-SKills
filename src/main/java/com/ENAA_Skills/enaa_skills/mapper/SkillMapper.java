@@ -11,14 +11,16 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface SkillMapper {
+    @Mapping(target = "acquired", ignore = true)
     SkillDTO skillToSkillDTO(Skill skill);
+
     List<SkillDTO> skillsToSkillDTOs(List<Skill> skills);
+
     SubSkillDTO subSkillToSubSkillDTO(SubSkill subSkill);
 
     @Mapping(target = "id", ignore = true)
     Skill skillDTOToSkill(SkillDTO skillDTO);
 
-    @Mapping(target = "id", ignore = true)
     SubSkill subSkillDTOToSubSkill(SubSkillDTO subSkillDTO);
 }
 

@@ -1,15 +1,25 @@
 package com.ENAA_Skills.enaa_skills.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+
+@Data
 @Entity
+@Table(name = "sub_skills")
 public class SubSkill {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
 
+    @Column(nullable = false)
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ValidationStatus status = ValidationStatus.NOT_VALIDATE;
+
+    private String description;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "skill_id", nullable = false)
     private Skill skill;
@@ -31,12 +41,12 @@ public class SubSkill {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public ValidationStatus getStatus() {
+        return status;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setStatus(ValidationStatus status) {
+        this.status = status;
     }
 
     public Skill getSkill() {
@@ -45,5 +55,13 @@ public class SubSkill {
 
     public void setSkill(Skill skill) {
         this.skill = skill;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

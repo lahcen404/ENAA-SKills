@@ -1,9 +1,11 @@
 package com.ENAA_Skills.enaa_skills.service.serviceImpl;
 
 import com.ENAA_Skills.enaa_skills.dto.SkillDTO;
+import com.ENAA_Skills.enaa_skills.dto.UpdateStatusDTO;
 import com.ENAA_Skills.enaa_skills.mapper.SkillMapper;
 import com.ENAA_Skills.enaa_skills.model.Skill;
 import com.ENAA_Skills.enaa_skills.model.SubSkill;
+import com.ENAA_Skills.enaa_skills.model.ValidationStatus;
 import com.ENAA_Skills.enaa_skills.repository.SkillRepository;
 import com.ENAA_Skills.enaa_skills.service.SkillManagementService;
 import org.springframework.stereotype.Service;
@@ -24,13 +26,37 @@ public class SkillManagementServiceImpl implements SkillManagementService {
     @Override
     public SkillDTO createSkill(SkillDTO skillDTO) {
         Skill skill = skillMapper.skillDTOToSkill(skillDTO);
-        if(skill.getSubSkills() != null){
-            for (SubSkill subSkill : skill.getSubSkills()){
+        if (skill.getSubSkills() != null) {
+            for (SubSkill subSkill : skill.getSubSkills()) {
                 subSkill.setSkill(skill);
+                subSkill.setStatus(ValidationStatus.NOT_VALIDATE);
             }
         }
         Skill savedSkill = skillRepository.save(skill);
-        return skillMapper.skillToSkillDTO(savedSkill);
+        return convertToDtoWithAcquiredStatus(savedSkill);
+    }
+
+    private SkillDTO convertToDtoWithAcquiredStatus(Skill skill) {
+        // entity to  DTO
+        SkillDTO dto = skillMapper.skillToSkillDTO(skill);
+
+        if (skill.getSubSkills() == null || skill.getSubSkills().isEmpty()) {
+            dto.setAcquired(false);
+            return dto;
+        }
+
+        // count  validate subSkills
+        int validatedCount = 0;
+        for (SubSkill subSkill : skill.getSubSkills()) {
+            if (subSkill.getStatus() == ValidationStatus.VALIDATE) {
+                validatedCount++;
+            }
+        }
+
+        boolean isAcquired = validatedCount > (skill.getSubSkills().size() / 2.0);
+        dto.setAcquired(isAcquired);
+
+        return dto;
     }
 
     @Override
@@ -50,6 +76,11 @@ public class SkillManagementServiceImpl implements SkillManagementService {
 
     @Override
     public void deleteSkill(Long id) {
+
+    }
+
+    @Override
+    public void updateSubSkillStatus(Long subSkillId, UpdateStatusDTO statusDTO) {
 
     }
 }

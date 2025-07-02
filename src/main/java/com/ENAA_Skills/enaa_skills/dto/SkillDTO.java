@@ -1,20 +1,15 @@
 package com.ENAA_Skills.enaa_skills.dto;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+
 
 import java.util.List;
 
 public class SkillDTO {
     private Long id;
-
-    @NotBlank(message = "Skill name cannot be blank")
     private String name;
-
-    private String description;
-
-    @Valid
+    private boolean acquired;
     private List<SubSkillDTO> subSkills;
+
 
     public Long getId() {
         return id;
@@ -32,13 +27,6 @@ public class SkillDTO {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public List<SubSkillDTO> getSubSkills() {
         return subSkills;
@@ -46,5 +34,13 @@ public class SkillDTO {
 
     public void setSubSkills(List<SubSkillDTO> subSkills) {
         this.subSkills = subSkills;
+    }
+
+    public boolean isAcquired() {
+        return acquired;
+    }
+
+    public void setAcquired(boolean acquired) {
+        this.acquired = acquired;
     }
 }
