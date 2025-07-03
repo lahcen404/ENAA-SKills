@@ -11,6 +11,8 @@ import com.ENAA_Skills.enaa_skills.service.SkillManagementService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SkillManagementServiceImpl implements SkillManagementService {
 
@@ -69,8 +71,9 @@ public class SkillManagementServiceImpl implements SkillManagementService {
 
     @Override
     public List<SkillDTO> getAllSkills() {
-        return List.of();
-    }
+        return skillRepository.findAll().stream()
+                .map(this::convertToDtoWithAcquiredStatus)
+                .collect(Collectors.toList());    }
 
     @Override
     public SkillDTO updateSkill(Long id, SkillDTO skillDTO) {
