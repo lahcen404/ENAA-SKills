@@ -32,4 +32,8 @@ public class SkillController {
         return ResponseEntity.ok(skillManagementService.getAllSkills());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<SkillDTO> updateSkill(@PathVariable Long id, @RequestBody SkillDTO skillDTO) {
+        return ResponseEntity.ok(skillManagementService.updateSkill(id, skillDTO));
+    }
 }
