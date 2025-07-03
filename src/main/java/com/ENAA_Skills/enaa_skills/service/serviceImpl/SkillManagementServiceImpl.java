@@ -61,7 +61,10 @@ public class SkillManagementServiceImpl implements SkillManagementService {
 
     @Override
     public SkillDTO getSkillById(Long id) {
-        return null;
+        Skill skill = skillRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("skill not found"));
+
+        return convertToDtoWithAcquiredStatus(skill);
     }
 
     @Override
