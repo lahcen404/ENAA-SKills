@@ -87,7 +87,10 @@ public class SkillManagementServiceImpl implements SkillManagementService {
 
     @Override
     public void deleteSkill(Long id) {
+        Skill deletedSkill = skillRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("skill not found "));
 
+        skillRepository.delete(deletedSkill);
     }
 
     @Override
