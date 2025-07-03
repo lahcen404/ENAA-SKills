@@ -1,9 +1,7 @@
 package com.ENAA_Skills.enaa_skills.controller;
 
 import com.ENAA_Skills.enaa_skills.dto.SkillDTO;
-import com.ENAA_Skills.enaa_skills.dto.UpdateStatusDTO;
 import com.ENAA_Skills.enaa_skills.service.SkillManagementService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
