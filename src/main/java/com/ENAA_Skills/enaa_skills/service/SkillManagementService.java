@@ -11,5 +11,4 @@ public interface SkillManagementService {
     List<SkillDTO> getAllSkills();
     SkillDTO updateSkill(Long id, SkillDTO skillDTO);
     void deleteSkill(Long id);
-    void updateSubSkillStatus(Long subSkillId, UpdateStatusDTO statusDTO);
 }
