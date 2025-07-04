@@ -72,5 +72,13 @@ public class ENAA_SkillsTests {
         assertEquals(ValidationStatus.NOT_VALIDATE, skillCreated.getSubSkills().get(0).getStatus());
     }
 
+    @Test
+    void getAllSkillsTest(){
 
+        List<SkillDTO> allSkills = skillManagementService.getAllSkills();
+
+        assertNotNull(allSkills);
+        assertEquals(1,allSkills.size());
+
+    }
 }
