@@ -25,6 +25,17 @@ public class SubSkill {
     private Skill skill;
 
 
+    public SubSkill(String name, String description, ValidationStatus status) {
+        this.name = name;
+        this.status = status;
+        this.description = description;
+    }
+
+    public SubSkill() {
+
+    }
+
+
     public Long getId() {
         return id;
     }

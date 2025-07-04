@@ -2,7 +2,6 @@ package com.ENAA_Skills.enaa_skills.service.serviceImpl;
 
 import com.ENAA_Skills.enaa_skills.dto.SkillDTO;
 import com.ENAA_Skills.enaa_skills.dto.SubSkillDTO;
-import com.ENAA_Skills.enaa_skills.dto.UpdateStatusDTO;
 import com.ENAA_Skills.enaa_skills.mapper.SkillMapper;
 import com.ENAA_Skills.enaa_skills.model.Skill;
 import com.ENAA_Skills.enaa_skills.model.SubSkill;
@@ -39,15 +38,15 @@ public class SkillManagementServiceImpl implements SkillManagementService {
             }
         }
         Skill savedSkill = skillRepository.save(skill);
-        return convertToDtoWithAcquiredStatus(savedSkill);
+        return convertToDtoWithValidateStatus(savedSkill);
     }
 
-    private SkillDTO convertToDtoWithAcquiredStatus(Skill skill) {
+    private SkillDTO convertToDtoWithValidateStatus(Skill skill) {
         // entity to  DTO
         SkillDTO dto = skillMapper.skillToSkillDTO(skill);
 
         if (skill.getSubSkills() == null || skill.getSubSkills().isEmpty()) {
-            dto.setAcquired(false);
+            dto.setValidate(false);
             return dto;
         }
 
@@ -59,8 +58,8 @@ public class SkillManagementServiceImpl implements SkillManagementService {
             }
         }
 
-        boolean isAcquired = validatedCount > (skill.getSubSkills().size() / 2.0);
-        dto.setAcquired(isAcquired);
+        boolean isValidate = validatedCount > (skill.getSubSkills().size() / 2.0);
+        dto.setValidate(isValidate);
 
         return dto;
     }
@@ -70,13 +69,13 @@ public class SkillManagementServiceImpl implements SkillManagementService {
         Skill skill = skillRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("skill not found"));
 
-        return convertToDtoWithAcquiredStatus(skill);
+        return convertToDtoWithValidateStatus(skill);
     }
 
     @Override
     public List<SkillDTO> getAllSkills() {
         return skillRepository.findAll().stream()
-                .map(this::convertToDtoWithAcquiredStatus)
+                .map(this::convertToDtoWithValidateStatus)
                 .collect(Collectors.toList());    }
 
     @Override
@@ -96,7 +95,7 @@ public class SkillManagementServiceImpl implements SkillManagementService {
        }
 
        Skill updatedSkill = skillRepository.save(existingSkill);
-        return convertToDtoWithAcquiredStatus(updatedSkill);
+        return convertToDtoWithValidateStatus(updatedSkill);
     }
 
     @Override

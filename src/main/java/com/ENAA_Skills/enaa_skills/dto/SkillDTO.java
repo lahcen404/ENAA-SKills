@@ -7,9 +7,15 @@ import java.util.List;
 public class SkillDTO {
     private Long id;
     private String name;
-    private boolean acquired;
+    private boolean validate;
     private List<SubSkillDTO> subSkills;
 
+    public SkillDTO(Long id, String name, boolean validate, List<SubSkillDTO> subSkills) {
+        this.id = id;
+        this.name = name;
+        this.validate = validate;
+        this.subSkills = subSkills;
+    }
 
     public Long getId() {
         return id;
@@ -36,11 +42,11 @@ public class SkillDTO {
         this.subSkills = subSkills;
     }
 
-    public boolean isAcquired() {
-        return acquired;
+    public boolean isValidate() {
+        return validate;
     }
 
-    public void setAcquired(boolean acquired) {
-        this.acquired = acquired;
+    public void setValidate(boolean validate) {
+        this.validate = validate;
     }
 }

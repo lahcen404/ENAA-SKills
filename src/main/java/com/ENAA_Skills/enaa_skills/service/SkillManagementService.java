@@ -1,7 +1,6 @@
 package com.ENAA_Skills.enaa_skills.service;
 
 import com.ENAA_Skills.enaa_skills.dto.SkillDTO;
-import com.ENAA_Skills.enaa_skills.dto.UpdateStatusDTO;
 
 import java.util.List;
 

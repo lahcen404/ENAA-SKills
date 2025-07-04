@@ -13,6 +13,12 @@ public class SubSkillDTO {
     private String description;
     private ValidationStatus status;
 
+    public SubSkillDTO(Long id, String name, String description, ValidationStatus status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
