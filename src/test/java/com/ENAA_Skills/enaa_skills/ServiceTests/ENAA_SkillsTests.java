@@ -17,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -81,4 +80,14 @@ public class ENAA_SkillsTests {
         assertEquals(1,allSkills.size());
 
     }
+
+    @Test
+    void deleteSkillTest(){
+        Long skillId = existingSkill.getId();
+        skillManagementService.deleteSkill(skillId);
+
+        assertFalse(skillRepository.existsById(skillId));
+    }
+
+
 }
