@@ -1,11 +1,13 @@
 package com.ENAA_Skills.enaa_skills.ServiceTests;
 
+import com.ENAA_Skills.enaa_skills.controller.SkillController;
 import com.ENAA_Skills.enaa_skills.dto.SkillDTO;
 import com.ENAA_Skills.enaa_skills.dto.SubSkillDTO;
 import com.ENAA_Skills.enaa_skills.model.Skill;
 import com.ENAA_Skills.enaa_skills.model.SubSkill;
 import com.ENAA_Skills.enaa_skills.model.ValidationStatus;
 import com.ENAA_Skills.enaa_skills.repository.SkillRepository;
+import com.ENAA_Skills.enaa_skills.repository.SubSkillRepository;
 import com.ENAA_Skills.enaa_skills.service.SkillManagementService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,13 +28,15 @@ public class ENAA_SkillsTests {
 
     private final SkillManagementService skillManagementService;
     private final SkillRepository skillRepository;
+    private final SubSkillRepository subSkillRepository;
 
     private Skill existingSkill;
 
     @Autowired
-    public ENAA_SkillsTests(SkillManagementService skillManagementService, SkillRepository skillRepository) {
+    public ENAA_SkillsTests(SkillManagementService skillManagementService, SkillRepository skillRepository, SubSkillRepository subSkillRepository) {
         this.skillManagementService = skillManagementService;
         this.skillRepository = skillRepository;
+        this.subSkillRepository = subSkillRepository;
     }
 
     @BeforeEach
@@ -90,4 +94,24 @@ public class ENAA_SkillsTests {
     }
 
 
+    @Test
+    void updateSkill(){
+        Long skillId = existingSkill.getId();
+        Long subSkillIdToUpdate = existingSkill.getSubSkills().get(0).getId();
+
+        SubSkillDTO updatedSubSkillDTO = new SubSkillDTO(subSkillIdToUpdate, "update name subskill", "new descriprion subskill", ValidationStatus.VALIDATE);
+
+        SkillDTO skillUpdate = new SkillDTO(skillId, "update Java ", false, List.of(updatedSubSkillDTO));
+
+        SkillDTO updatedSkillDTO = skillManagementService.updateSkill(skillId, skillUpdate);
+
+        assertNotNull(updatedSkillDTO);
+        assertEquals("update Java ", updatedSkillDTO.getName());
+
+        SubSkill updatedSubSkillFromDb = subSkillRepository.findById(subSkillIdToUpdate).orElseThrow();
+        assertEquals("update name subskill", updatedSubSkillFromDb.getName());
+        assertEquals(ValidationStatus.VALIDATE, updatedSubSkillFromDb.getStatus());
+        assertEquals("new descriprion subskill", updatedSubSkillFromDb.getDescription());
+
+    }
 }
